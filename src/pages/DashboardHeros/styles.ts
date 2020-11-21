@@ -6,7 +6,6 @@ export const Form = styled.form`
   max-width: 750px;
   display: flex;
 
-
   input {
     flex: 1;
     height: 70px;
@@ -17,7 +16,7 @@ export const Form = styled.form`
     border-right: 0;
 
     &::placeholder {
-      color: #A8A8B3;
+      color: #a8a8b3;
     }
   }
   button {
@@ -26,11 +25,11 @@ export const Form = styled.form`
     background: #f95959;
     border-radius: 0 5px 5px 0;
     border: 0;
-    color: #FFF;
+    color: #fff;
     font-weight: bold;
     transition: background-color 0.2s;
     &:hover {
-      background: ${shade(0.2, '#f95959')}
+      background: ${shade(0.2, '#f95959')};
     }
   }
 `;
@@ -39,7 +38,6 @@ export const Container = styled.div`
   padding-top: 15px;
   width: 100%;
 `;
-
 
 export const Content = styled.div`
   display: flex;

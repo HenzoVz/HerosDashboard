@@ -7,8 +7,6 @@ export const Container = styled.div`
   text-align: center;
   padding: 25px;
 
-
-
   h1 {
     font-weight: 500;
     color: #eeeeee;
