@@ -57,7 +57,7 @@ const InfoHero: React.FC = () => {
               alt={hero.name}
             />
             <p>{hero.description}</p>
-            <strong>{hero.name} presente nos Quadrinhos abaixo:</strong>
+            <strong>{hero.name} está presente nos Quadrinhos abaixo:</strong>
             {hero.comics.items.map(item => (
               <Comics key={item.resourceURI}>
                 <p>{item.name}</p>
