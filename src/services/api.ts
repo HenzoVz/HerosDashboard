@@ -10,11 +10,17 @@ const hash = md5.create();
 hash.update(timestamp + PRIVATE_KEY + PUBLIC_KEY).hex();
 
 export const allCharacters = axios.create({
-  baseURL: `https://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`,
+  baseURL: `https://gateway.marvel.com/v1/public/characters?ts=${timestamp}&limit=15&apikey=${PUBLIC_KEY}&hash=${hash}`,
 });
 
 export function searchCharacter(name: string): AxiosInstance {
   return axios.create({
     baseURL: `https://gateway.marvel.com/v1/public/characters?ts=${timestamp}&name=${name}&apikey=${PUBLIC_KEY}&hash=${hash}`,
+  });
+}
+
+export function characterInfo(id: string): AxiosInstance {
+  return axios.create({
+    baseURL: `https://gateway.marvel.com/v1/public/characters/${id}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`,
   });
 }

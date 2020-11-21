@@ -47,7 +47,8 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "react/jsx-indent" : "off"
   },
   "settings": {
     "import/resolver": {

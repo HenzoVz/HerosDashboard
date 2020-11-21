@@ -1,5 +1,6 @@
-/* eslint-disable prettier/prettier */
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useCallback } from 'react';
+import { FiChevronRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { allCharacters, searchCharacter } from '../../services/api';
 
 import { Container, Content, Form } from './styles';
@@ -14,7 +15,7 @@ interface CharactersProps {
     path: string;
     extension: string;
   };
-  comics: [];
+  comics: string;
 }
 
 const DashboardHeros: React.FC = () => {
@@ -36,12 +37,10 @@ const DashboardHeros: React.FC = () => {
   });
 
   useEffect(() => {
-    allCharacters
-      .get('')
-      .then(response => {
-        const res = response.data;
-        setHeroRepositories(res.data.results);
-      })
+    allCharacters.get('').then(response => {
+      const res = response.data;
+      setHeroRepositories(res.data.results);
+    });
   }, []);
 
   useEffect(() => {
@@ -51,23 +50,24 @@ const DashboardHeros: React.FC = () => {
     );
   }, [heroRepositoriesLocal]);
 
-  async function handleAddHeroRepository(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
-    event.preventDefault();
+  const handleAddHeroRepository = useCallback(
+    async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+      event.preventDefault();
 
-    searchCharacter(newHeroRepository)
-      .get('')
-      .then(response => {
-        const character = response.data;
+      searchCharacter(newHeroRepository)
+        .get('')
+        .then(response => {
+          const character = response.data;
 
-        setHeroRepositoriesLocal([
-          character.data.results[0],
-          ...heroRepositories,
-        ]);
-        setNewHeroRepository('');
-      });
-  }
+          setHeroRepositoriesLocal([
+            character.data.results[0],
+            ...heroRepositories,
+          ]);
+          setNewHeroRepository('');
+        });
+    },
+    [heroRepositories, newHeroRepository],
+  );
 
   return (
     <>
@@ -83,28 +83,34 @@ const DashboardHeros: React.FC = () => {
       <Container>
         {heroRepositoriesLocal.length !== 0
           ? heroRepositoriesLocal.map(hero => (
-            <Content key={hero.id}>
-              <img
-                src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
-                alt={hero.name}
-              />
-              <div>
-                <strong>{hero.name}</strong>
-                <p>{hero.description}</p>
-              </div>
-            </Content>
+              <Content key={hero.id}>
+                <Link to={`info/${hero.id}`}>
+                  <img
+                    src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
+                    alt={hero.name}
+                  />
+                  <div>
+                    <strong>{hero.name}</strong>
+                    <p>{hero.description}</p>
+                  </div>
+                  <FiChevronRight size={20} />
+                </Link>
+              </Content>
             ))
           : heroRepositories.map(hero => (
-            <Content key={hero.id}>
-              <img
-                src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
-                alt={hero.name}
-              />
-              <div>
-                <strong>{hero.name}</strong>
-                <p>{hero.description}</p>
-              </div>
-            </Content>
+              <Content key={hero.id}>
+                <Link to={`info/${hero.id}`}>
+                  <img
+                    src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
+                    alt={hero.name}
+                  />
+                  <div>
+                    <strong>{hero.name}</strong>
+                    <p>{hero.description}</p>
+                  </div>
+                  <FiChevronRight size={20} />
+                </Link>
+              </Content>
             ))}
       </Container>
     </>
